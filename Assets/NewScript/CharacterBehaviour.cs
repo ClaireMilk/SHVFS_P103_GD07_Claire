@@ -10,12 +10,15 @@ public class CharacterBehaviour : MonoBehaviour
     public GameObject playerBear;
 
     public float moveSpeed;
-    private Rigidbody rb;
-
+    protected Rigidbody rb;
+    protected Animator anim;
+    public bool hasBall;
 
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponentInChildren<Animator>();
+        hasBall = false;
     }
     public void FixedUpdate()
     {
@@ -57,6 +60,23 @@ public class CharacterBehaviour : MonoBehaviour
         if (xInput < 0 && yInput > 0)
         {
             playerBear.transform.localEulerAngles = new Vector3(0, -45, 0);
+        }
+
+        if(xInput != 0 || yInput != 0)
+        {
+            anim.SetBool("Running", true);
+        }
+        else
+        {
+            anim.SetBool("Running", false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<Ball>())
+        {
+            hasBall = true;
         }
     }
 }

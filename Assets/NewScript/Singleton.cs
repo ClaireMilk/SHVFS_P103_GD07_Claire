@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Singleton<T> : MonoBehaviour where T : Singleton<T>
+{
+    private static T instance = null;
+
+    public static T Instance
+    {
+        get
+        {
+            if (instance != null) return instance;
+            instance = FindObjectOfType<T>();
+            if (instance == null)
+            {
+                instance = new GameObject(typeof(T).Name).AddComponent<T>();
+            }
+            return instance;
+        }
+    }
+}
+
+public class UIManager : Singleton<UIManager>
+{
+    public Text text;
+
+    public void UpdateHealth(int score)
+    {
+        text.text = "" + score;
+    }
+}
