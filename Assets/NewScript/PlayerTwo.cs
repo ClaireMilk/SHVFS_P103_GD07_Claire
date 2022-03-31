@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerTwo : CharacterBehaviour
 {
-    public void Update()
+    public override void Update()
     {
+        base.Update();
+
         xInput = Input.GetAxis("Horizontal2");
         yInput = Input.GetAxis("Vertical2");
 

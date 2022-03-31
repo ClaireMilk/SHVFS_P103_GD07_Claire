@@ -21,13 +21,3 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         }
     }
 }
-
-public class UIManager : Singleton<UIManager>
-{
-    public Text text;
-
-    public void UpdateHealth(int score)
-    {
-        text.text = "" + score;
-    }
-}

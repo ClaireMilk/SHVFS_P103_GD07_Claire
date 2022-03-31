@@ -13,13 +13,28 @@ public class CharacterBehaviour : MonoBehaviour
     protected Rigidbody rb;
     protected Animator anim;
     public bool hasBall;
+    protected bool canTakeBall;
 
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         hasBall = false;
+        canTakeBall = true;
     }
+
+    public virtual void Update()
+    {
+        if (hasBall)
+        {
+            canTakeBall = false;
+        }
+        else
+        {
+            canTakeBall = true;
+        }
+    }
+
     public void FixedUpdate()
     {
         rb.MovePosition(transform.position + (processMovement * moveSpeed * Time.deltaTime));
@@ -72,11 +87,19 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Ball>())
+        if (other.gameObject.GetComponent<Ball>() && canTakeBall)
         {
+            var pickedBall = other.gameObject;
+            pickedBall.GetComponent<Rigidbody>().isKinematic = true;
+            pickedBall.transform.parent = playerBear.gameObject.transform;
+
+            pickedBall.transform.localPosition = new Vector3(0, 2.5f, 0);
+
             hasBall = true;
+            canTakeBall = false;
+
         }
     }
 }

@@ -10,11 +10,5 @@ public class Ball : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        if(other.gameObject.tag == "Bear")
-        {
-            this.gameObject.transform.parent = other.gameObject.transform;
-        }
     }
-
 }

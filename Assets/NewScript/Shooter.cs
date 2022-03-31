@@ -8,6 +8,7 @@ public class Shooter : MonoBehaviour
     public float originTime;
     public GameObject ball;
     GameObject allBalls;
+    public Transform spawnPosition;
 
     public float ballUpForce;
 
@@ -19,7 +20,7 @@ public class Shooter : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            allBalls = Instantiate(ball, transform.position, transform.rotation);
+            allBalls = Instantiate(ball, spawnPosition.position, transform.rotation);
             allBalls.GetComponent<Rigidbody>().AddForce(transform.up * ballUpForce + transform.right * ballRightForce + transform.forward * ballForwardForce);
             timer = originTime;
         }
